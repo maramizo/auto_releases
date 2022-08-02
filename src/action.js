@@ -34,8 +34,8 @@ async function run(){
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
-        tag_name: context.sha,
-        name: releaseCommit.commit.message.split(':')[1],
+        tag_name: releaseCommit.commit.message.split(':')[1],
+        name: `Release ${releaseCommit.commit.message.split(':')[1]}`,
         body: 'This is a release created by the action'
     });
 
