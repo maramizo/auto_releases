@@ -9021,7 +9021,7 @@ async function run(){
     }
 
     // Check if pull request's commits contain a commit with a message that starts with 'release:'
-    const commits = await octokit.pulls.listCommits({
+    const commits = await octokit.rest.pulls.listCommits({
         owner: context.repo.owner,
         repo: context.repo.repo,
         pull_number: pull_request.number
@@ -9033,7 +9033,7 @@ async function run(){
     }
 
     // Create a new release
-    const release = await octokit.repos.createRelease({
+    const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
         tag_name: context.sha,
@@ -9042,7 +9042,7 @@ async function run(){
     });
 
     // Add the release to the pull request
-    await octokit.issues.addLabels({
+    await octokit.rest.issues.addLabels({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
