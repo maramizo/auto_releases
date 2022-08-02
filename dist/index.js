@@ -9059,6 +9059,22 @@ async function run(){
         issue_number: pull_request.number,
         labels: [`Release ${releaseName}`]
     });
+
+    // Get release link
+    const releaseLink = `
+        <a href="${release.data.html_url}">
+            ${release.data.tag_name}
+        </a>
+    `;
+
+    // Update the pull request with the release link
+    await octokit.rest.issues.update({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: pull_request.number,
+        body: `${pull_request.body}
+        ${releaseLink}`
+    });
 }
 
 run().then();
