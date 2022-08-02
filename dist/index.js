@@ -9075,23 +9075,14 @@ async function run(){
     });
 
     // Get release link
-    const releaseLink = `
-        <a href="${release.data.html_url}">
-            ${release.data.tag_name}
-        </a>
-    `;
+    const releaseLink = `<a href="${release.data.html_url}">${release.data.tag_name}</a>`;
 
     // Create new comment with release link
     await octokit.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        body: `
-            <details>
-                <summary>Release</summary>
-                ${releaseLink}
-            </details>
-        `
+        body: `Released PR! <details><summary>Release</summary>${releaseLink}</details>`
     });
 }
 
