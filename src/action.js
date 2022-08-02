@@ -37,6 +37,22 @@ async function run(){
         tag_name: releaseName,
     });
 
+    // Check if release already exists
+    const releases = await octokit.rest.repos.listReleases({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+    });
+
+    // Check for and delete existing release
+    const existingRelease = releases.data.find(release => release.tag_name === releaseName);
+    if(existingRelease) {
+        await octokit.rest.repos.deleteRelease({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            release_id: existingRelease.id,
+        });
+    }
+
     // Create a new release
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
