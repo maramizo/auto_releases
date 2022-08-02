@@ -59,7 +59,7 @@ async function run(){
         repo: context.repo.repo,
         tag_name: releaseName,
         name: `Release ${releaseName}`,
-        body: releaseNotes.data.body,
+        body: pull_request.body ? `${pull_request.body}\n\n${releaseNotes.data.body}` : releaseNotes.data.body,
     });
 
     // Add the release to the pull request
@@ -78,7 +78,7 @@ async function run(){
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        body: `Released PR! <details><summary>Release</summary>${releaseLink}</details>`
+        body: `<h1>Released PR! <details><summary>Release</summary>${releaseLink}</details></h1>`
     });
 }
 
