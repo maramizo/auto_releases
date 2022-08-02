@@ -9027,7 +9027,7 @@ async function run(){
         pull_number: pull_request.number
     });
 
-    const releaseCommit = commits.data.find(commit => commit.commit.message.includes('release:'));
+    const releaseCommit = commits.data.find(commit => (commit.commit.message + '\n' + commit.commit.body).includes('release:'));
     if(!releaseCommit) {
         core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
     }
