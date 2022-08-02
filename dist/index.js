@@ -9034,13 +9034,22 @@ async function run(){
     const regex = /release:(.*)/;
     const releaseName = regex.exec(releaseCommit.commit.message)[1];
 
+    // Generate release notes
+    const releaseNotes = await octokit.rest.repos.generateReleaseNotes({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        tag_name: releaseName,
+    });
+
+    console.dir(releaseNotes)
+
     // Create a new release
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
         tag_name: releaseName,
         name: `Release ${releaseName}`,
-        body: 'This is a release created by the action'
+        body: releaseNotes
     });
 
     // Add the release to the pull request
