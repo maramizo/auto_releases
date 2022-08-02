@@ -1,0 +1,15 @@
+name: 'Auto Release Action'
+description: 'Automatically releases a Pull Request'
+author: 'Mohammad Ayoub'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
+  TENOR_TOKEN:
+    description: 'Tenor API token'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
