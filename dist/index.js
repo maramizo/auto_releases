@@ -9082,7 +9082,7 @@ async function run(){
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        body: `<h1>Released PR! <details><summary>Release</summary>${releaseLink}</details></h1>`
+        body: `<h2><details><summary>Release</summary>${releaseLink}</details></h2>`
     });
 }
 
