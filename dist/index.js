@@ -9031,13 +9031,15 @@ async function run(){
     if(!releaseCommit) {
         core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
     }
+    console.dir(releaseCommit.commit.message.split(':')[1])
+    console.dir(releaseCommit.commit.message)
 
     // Create a new release
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
         tag_name: context.sha,
-        name: `Release ${releaseCommit.commit.message.split(':')[1]}`,
+        name: releaseCommit.commit.message.split(':')[1],
         body: 'This is a release created by the action'
     });
 
