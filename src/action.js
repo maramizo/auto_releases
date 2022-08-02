@@ -77,13 +77,17 @@ async function run(){
         </a>
     `;
 
-    // Update the pull request with the release link
-    await octokit.rest.issues.update({
+    // Create new comment with release link
+    await octokit.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        body: `${pull_request.body}
-        ${releaseLink}`
+        body: `
+            <details>
+                <summary>Release</summary>
+                ${releaseLink}
+            </details>
+        `
     });
 }
 
