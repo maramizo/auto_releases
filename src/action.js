@@ -37,15 +37,13 @@ async function run(){
         tag_name: releaseName,
     });
 
-    console.dir(releaseNotes)
-
     // Create a new release
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
         tag_name: releaseName,
         name: `Release ${releaseName}`,
-        body: releaseNotes
+        body: releaseNotes.data.body,
     });
 
     // Add the release to the pull request
