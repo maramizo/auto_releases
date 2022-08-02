@@ -9029,12 +9029,12 @@ async function run(){
 
     console.dir(commits.data);
 
-    const releaseCommit = commits.data.find(commit => (commit.commit.message + '\n' + commit.commit.body).includes('release:'));
+    const releaseCommit = commits.data.find(commit => (commit.commit.message + '\n' + commit.commit.description).includes('release:'));
     if(!releaseCommit) {
         core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
     }
     const regex = /release:(.*)/;
-    const releaseName = regex.exec(releaseCommit.commit.message + '\n' + releaseCommit.commit.body)[1];
+    const releaseName = regex.exec(releaseCommit.commit.message + '\n' + releaseCommit.commit.description)[1];
 
     // Generate release notes
     const releaseNotes = await octokit.rest.repos.generateReleaseNotes({
