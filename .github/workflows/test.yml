@@ -3,7 +3,7 @@ name: Automatically Publish PR
 on:
   pull_request:
     types:
-      - "opened"
+      - "closed"
 
 jobs:
   test:
