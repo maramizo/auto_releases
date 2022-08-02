@@ -9027,19 +9027,19 @@ async function run(){
         pull_number: pull_request.number
     });
 
-    const releaseCommit = commits.data.find(commit => commit.commit.message.startsWith('release:'));
+    const releaseCommit = commits.data.find(commit => commit.commit.message.includes('release:'));
     if(!releaseCommit) {
         core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
     }
-    console.dir(releaseCommit.commit.message.split(':')[1])
-    console.dir(releaseCommit.commit.message)
+    const regex = /release:(.*)/;
+    const releaseName = regex.exec(releaseCommit.commit.message)[1];
 
     // Create a new release
     const release = await octokit.rest.repos.createRelease({
         owner: context.repo.owner,
         repo: context.repo.repo,
-        tag_name: releaseCommit.commit.message.split(':')[1],
-        name: `Release ${releaseCommit.commit.message.split(':')[1]}`,
+        tag_name: releaseName,
+        name: `Release ${releaseName}`,
         body: 'This is a release created by the action'
     });
 
@@ -9048,7 +9048,7 @@ async function run(){
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: pull_request.number,
-        labels: [release.data.id]
+        labels: [`Release ${releaseName}`]
     });
 }
 
