@@ -9,7 +9,6 @@ async function run(){
     const { pull_request } = context.payload;
 
     console.dir(pull_request);
-
     if(!pull_request) {
         console.log('This action only works on pull requests');
         return;
