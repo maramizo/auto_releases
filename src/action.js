@@ -8,7 +8,11 @@ async function run(){
     const { context = {} } = github;
     const { pull_request } = context.payload;
 
-    console.dir(pull_request);
+    if(pull_request.base.ref !== 'master'){
+        console.dir('Releases are only made from master');
+        return;
+    }
+
     if(!pull_request) {
         console.log('This action only works on pull requests');
         return;
