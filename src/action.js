@@ -8,12 +8,16 @@ async function run(){
     const { context = {} } = github;
     const { pull_request } = context.payload;
 
+    console.dir(pull_request);
+
     if(!pull_request) {
-        core.setFailed('This action only works on pull requests');
+        console.log('This action only works on pull requests');
+        return;
     }
 
     if(!pull_request.merged) {
-        core.setFailed('This action only works on merged pull requests');
+        console.log('This action only works on merged pull requests');
+        return;
     }
 
     // Check if pull request's commits contain a commit with a message that starts with 'release:'
@@ -25,7 +29,8 @@ async function run(){
 
     const releaseCommit = commits.data.find(commit => (commit.commit.message + '\n' + commit.commit.description).includes('release:'));
     if(!releaseCommit) {
-        core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
+        console.log('This action only works on pull requests with a commit that starts with "release:"');
+        return;
     }
     const regex = /release:(.*)/;
     const releaseName = regex.exec(releaseCommit.commit.message + '\n' + releaseCommit.commit.description)[1];
@@ -51,6 +56,13 @@ async function run(){
             repo: context.repo.repo,
             release_id: existingRelease.id,
         });
+
+        // delete existing tag
+        await octokit.rest.git.deleteRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `tags/${releaseName}`,
+        });
     }
 
     // Create a new release
@@ -60,6 +72,7 @@ async function run(){
         tag_name: releaseName,
         name: `Release ${releaseName}`,
         body: pull_request.body ? `${pull_request.body}\n\n${releaseNotes.data.body}` : releaseNotes.data.body,
+        sha: context.sha,
     });
 
     // Add the release to the pull request
