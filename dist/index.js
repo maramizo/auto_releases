@@ -9012,7 +9012,10 @@ async function run(){
     const { context = {} } = github;
     const { pull_request } = context.payload;
 
-    console.dir(pull_request);
+    if(pull_request.base.ref !== 'master'){
+        console.dir('Releases are only made from master');
+        return;
+    }
 
     if(!pull_request) {
         console.log('This action only works on pull requests');
@@ -9033,7 +9036,8 @@ async function run(){
 
     const releaseCommit = commits.data.find(commit => (commit.commit.message + '\n' + commit.commit.description).includes('release:'));
     if(!releaseCommit) {
-        core.setFailed('This action only works on pull requests with a commit that starts with "release:"');
+        console.log('This action only works on pull requests with a commit that starts with "release:"');
+        return;
     }
     const regex = /release:(.*)/;
     const releaseName = regex.exec(releaseCommit.commit.message + '\n' + releaseCommit.commit.description)[1];
