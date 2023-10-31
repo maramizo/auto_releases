@@ -1,0 +1,11 @@
+name: 'Generate New Release'
+description: 'Generates a new release, based on the year, week of year and the latest tag.'
+
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'release/index.js'

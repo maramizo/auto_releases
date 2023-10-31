@@ -1,0 +1,16 @@
+name: Generate New Release
+
+on:
+  workflow_dispatch:
+    branches:
+      - dev
+
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./release
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
