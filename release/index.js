@@ -9039,16 +9039,20 @@
                 .pop();
 
             const [currentYear, currentWeek] = getWeekNumber(new Date());
-            const lastReleaseWeek = lastRelease.split('.')[1];
-            const lastReleaseYear = lastRelease.split('.')[0].slice(1);
-
             let newRelease = '';
 
-            if (currentYear !== lastReleaseYear || currentWeek !== lastReleaseWeek) {
+            if (!lastRelease) {
                 newRelease = `v${currentYear}.${currentWeek}.1`;
             } else {
-                const lastReleaseNumber = lastRelease.split('.')[2];
-                newRelease = `v${currentYear}.${currentWeek}.${parseInt(lastReleaseNumber) + 1}`;
+                const lastReleaseWeek = lastRelease.split('.')[1];
+                const lastReleaseYear = lastRelease.split('.')[0].slice(1);
+
+                if (currentYear !== lastReleaseYear || currentWeek !== lastReleaseWeek) {
+                    newRelease = `v${currentYear}.${currentWeek}.1`;
+                } else {
+                    const lastReleaseNumber = lastRelease.split('.')[2];
+                    newRelease = `v${currentYear}.${currentWeek}.${parseInt(lastReleaseNumber) + 1}`;
+                }
             }
 
             // Generate release notes.
