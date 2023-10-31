@@ -9038,8 +9038,9 @@
                 .sort()
                 .pop();
 
-            const [currentYear, currentWeek] = getWeekNumber(new Date());
+            let [currentYear, currentWeek] = getWeekNumber(new Date());
             let newRelease = '';
+            currentYear = currentYear.toString().slice(2);
 
             if (!lastRelease) {
                 newRelease = `v${currentYear}.${currentWeek}.1`;
