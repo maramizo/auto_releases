@@ -12,3 +12,11 @@ jobs:
     steps:
       - name: Show Ref
         run: echo ${{ github.ref }}
+
+      - name: Conditional
+        if: ${{ github.event_name}} == 'workflow_dispatch'
+        run: echo "Workflow Dispatch detected!"
+
+      - name: Else
+        if: ${{ github.event_name}} != 'workflow_dispatch'
+        run: echo ${{ github.event_name }}
