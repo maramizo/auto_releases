@@ -9077,6 +9077,14 @@
                 sha: context.sha,
             });
 
+            // Print out all workflows
+            const workflows = await octokit.rest.actions.listRepoWorkflows({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+            });
+
+            console.log(workflows);
+
             // Run workflow dispatch
             const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
