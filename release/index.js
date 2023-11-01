@@ -9076,6 +9076,16 @@
                 body: releaseNotes.data.body,
                 sha: context.sha,
             });
+
+            // Run workflow dispatch
+            const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: './.github/workflows/SomeAction.yml',
+                ref: `refs/tags/${newRelease}`,
+            });
+            
+            console.log(workflowDispatch);
         }
 
         run().then();
