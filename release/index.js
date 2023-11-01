@@ -9100,7 +9100,7 @@
             const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: './.github/workflows/SomeAction.yml',
+                workflow_id: 74496383,
                 ref: `refs/tags/${newRelease}`,
             });
             
