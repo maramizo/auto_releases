@@ -11,9 +11,3 @@ jobs:
       - uses: ./release
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  deploy:
-    if: github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/tags/v')
-    uses: ./.github/workflows/SomeAction.yml
-    secrets: inherit
-    needs: release
-    
