@@ -1,0 +1,14 @@
+name: CI
+run-name: Run CI on ${{ github.ref_name }} by @${{ github.actor }}
+
+on: 
+  - push
+  - workflow_dispatch
+
+jobs:
+  sample:
+    name: Sample
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Show Ref
+        run: echo ${{ github.ref }}
