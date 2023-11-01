@@ -9035,7 +9035,17 @@
             const lastRelease = releases.data
                 .map((release) => release.tag_name)
                 .filter((tag) => releaseRegex.test(tag))
-                .sort()
+                .sort((a, b) => {
+                    const aVersion = a.split('.').map((v) => parseInt(v.replace('v', '')));
+                    const bVersion = b.split('.').map((v) => parseInt(v.replace('v', '')));
+                    if (aVersion[0] > bVersion[0] || aVersion[1] > bVersion[1] || aVersion[2] > bVersion[2]) {
+                        return 1;
+                    }
+                    if (aVersion[0] < bVersion[0] || aVersion[1] < bVersion[1] || aVersion[2] < bVersion[2]) {
+                        return -1;
+                    }
+                    return 0;
+                })
                 .pop();
 
             let [currentYear, currentWeek] = getWeekNumber(new Date());
