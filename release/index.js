@@ -9083,7 +9083,8 @@
                 repo: context.repo.repo,
             });
 
-            console.log(workflows.data.workflows.map((workflow) => workflow.name));
+            console.log(workflows.data.workflows.map((workflow) => workflow.id));
+            console.table(workflows.data.workflows);
 
             // Run workflow dispatch
             const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
