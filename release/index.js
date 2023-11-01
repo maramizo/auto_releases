@@ -9038,17 +9038,26 @@
                 .sort()
                 .pop();
 
-            const [currentYear, currentWeek] = getWeekNumber(new Date());
-            const lastReleaseWeek = lastRelease.split('.')[1];
-            const lastReleaseYear = lastRelease.split('.')[0].slice(1);
-
+            let [currentYear, currentWeek] = getWeekNumber(new Date());
             let newRelease = '';
+            currentYear = currentYear.toString().slice(2);
 
-            if (currentYear !== lastReleaseYear || currentWeek !== lastReleaseWeek) {
+            if (!lastRelease) {
+                console.log('No releases found. Creating first release.');
                 newRelease = `v${currentYear}.${currentWeek}.1`;
             } else {
-                const lastReleaseNumber = lastRelease.split('.')[2];
-                newRelease = `v${currentYear}.${currentWeek}.${parseInt(lastReleaseNumber) + 1}`;
+                const lastReleaseWeek = lastRelease.split('.')[1];
+                const lastReleaseYear = lastRelease.split('.')[0].slice(1);
+
+                console.log(`Last release: ${lastRelease} | Last release year: ${lastReleaseYear} | Last release week: ${lastReleaseWeek}`);
+                console.log(`Current year: ${currentYear} | Current week: ${currentWeek}`)
+
+                if (currentYear !== lastReleaseYear || String(currentWeek) !== lastReleaseWeek) {
+                    newRelease = `v${currentYear}.${currentWeek}.1`;
+                } else {
+                    const lastReleaseNumber = lastRelease.split('.')[2];
+                    newRelease = `v${currentYear}.${currentWeek}.${parseInt(lastReleaseNumber) + 1}`;
+                }
             }
 
             // Generate release notes.
