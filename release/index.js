@@ -9100,7 +9100,7 @@
             const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: 74496383,
+                workflow_id: 74591577,
                 ref: `refs/tags/${newRelease}`,
             });
             
