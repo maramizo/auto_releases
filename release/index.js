@@ -9085,26 +9085,27 @@
                 name: newRelease,
                 body: releaseNotes.data.body,
                 sha: context.sha,
+                draft: true
             });
 
-            // Print out all workflows
-            const workflows = await octokit.rest.actions.listRepoWorkflows({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-            });
+            // // Print out all workflows
+            // const workflows = await octokit.rest.actions.listRepoWorkflows({
+            //     owner: context.repo.owner,
+            //     repo: context.repo.repo,
+            // });
 
-            console.log(workflows.data.workflows.map((workflow) => workflow.id));
-            console.table(workflows.data.workflows);
+            // console.log(workflows.data.workflows.map((workflow) => workflow.id));
+            // console.table(workflows.data.workflows);
 
             // Run workflow dispatch
-            const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 74591577,
-                ref: `refs/tags/${newRelease}`,
-            });
+            // const workflowDispatch = await octokit.rest.actions.createWorkflowDispatch({
+            //     owner: context.repo.owner,
+            //     repo: context.repo.repo,
+            //     workflow_id: 74591577,
+            //     ref: `refs/tags/${newRelease}`,
+            // });
             
-            console.log(workflowDispatch);
+            // console.log(workflowDispatch);
         }
 
         run().then();
